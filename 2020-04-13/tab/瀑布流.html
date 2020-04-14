@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀑布流</title>
+    <style>
+        #view{
+            width: 1500px;
+            margin:0 auto;
+            position: relative;
+            border:1px solid black
+        }
+        #view img{
+            position: absolute;
+            width:220px;
+        }
+        #view title{
+            color: black;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="view"></div>
+</body>
+<script src="data.js"></script>
+<script>
+    var cols=[
+        {
+            col:0,
+            h:0
+        },
+        {
+            col:1,
+            h:0
+        },
+        {
+            col:2,
+            h:0
+        },
+        {
+            col:3,
+            h:0
+        },
+        {
+            col:4,
+            h:0
+        },
+        {
+            col:5,
+            h:0
+        }
+    ]
+    
+    for(var i=0;i<list.length;i++){
+        cols.sort(function(a,b){
+            if(a.h>b.h){
+                return 1
+            }else{
+                return -1
+            }
+        })
+        var box=document.createElement("box")
+        var node=document.createElement("img");
+
+        node.style.left=cols[0].col*(220+36)+"px";
+        node.style.top=cols[0].h+"px";
+        node.src=list[i].img_url;
+
+        box.style.left=cols[0].col*(220+36)+"px";
+        box.style.top=cols[0].h+"px";
+        box.innerText=list[i].title;
+        view.appendChild(box)
+        box.appendChild(node)
+        view.appendChild(node);
+        
+        var str=list[i].img_url.split("?")[1].split("x");
+        var img_w=parseInt(str[0]);
+        var img_h=parseInt(str[1]);
+        var H=220*img_h/img_w;
+        cols[0].h+=H+36;
+
+
+    }
+    cols.sort(function(a,b){
+        if(a.h<b.h){
+            return 1
+        }else{
+            return -1
+        }
+    })
+
+    view.style.height=cols[0].h+"px";
+    
+</script>
+</html>
